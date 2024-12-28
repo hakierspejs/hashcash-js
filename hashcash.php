@@ -182,8 +182,8 @@ function hc_CheckStamp()
 	if($validstamp) $validstamp = hc_CheckContract($stamp, $collision, $contract); // collision meets contract?
 	DEBUG_OUT("FINAL checked contract: $validstamp");
 
-    //return $validstamp;
+    return $validstamp;
     DEBUG_OUT("returning validstamp=" . var_export($validstamp, true));
-    return true;
+    //return true;
 }
 ?>
