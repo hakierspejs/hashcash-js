@@ -161,7 +161,7 @@ function hc_CheckStamp()
 	DEBUG_OUT("hc_contract: $client_con");
 	DEBUG_OUT("collision text: $collision");
 
-	DEBUG_OUT("before all checks, valid stamp is $validstamp");
+	DEBUG_OUT("d33v1 before all checks, valid stamp is $validstamp");
 
 
 	// optimized, fastest-test-first order
