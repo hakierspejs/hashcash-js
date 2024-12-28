@@ -121,8 +121,10 @@ function hc_CheckExpiration($a_stamp)
 // check for collision of $stamp_contract bits for $stamp and $collision
 function hc_CheckContract($stamp, $collision, $stamp_contract)
 {
-	if($stamp_contract >= 32)
-		return false;
+    if($stamp_contract >= 32) {
+        DEBUG_OUT("ERROR stamp contract too large: $stamp_contract");
+        return false;
+    }
 
 	// get hash of $collision to compare to $stamp
 	$maybe_sum = hc_HashFunc($collision);
@@ -181,7 +183,7 @@ function hc_CheckStamp()
 	DEBUG_OUT("FINAL checked contract: $validstamp");
 
     //return $validstamp;
-    DEBUG_OUT("returning $validstamp");
+    DEBUG_OUT("returning validstamp=" . var_export($validstamp, true));
     return true;
 }
 ?>
