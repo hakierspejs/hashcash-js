@@ -51,7 +51,7 @@ function hc_HexInBin($x)
 		case 'F': $ret = '1111'; break;
 		default: $ret = '0000';
 	}
-//	DEBUG_OUT("ret = " . $ret);
+	DEBUG_OUT("hc_HexIsBin(x=$x) => ret = " . $ret);
 	return $ret;
 }
 
@@ -62,7 +62,7 @@ function hc_ExtractBits($hex_string, $num_bits)
 	for($i = 0; $i < $num_chars; $i++)
 		$bit_string .= hc_HexInBin(substr($hex_string, $i, 1));
 
-//	DEBUG_OUT("requested $num_bits from $hex_string, returned $bit_string as " . substr($bit_string, 0, $num_bits));
+	DEBUG_OUT("requested $num_bits from $hex_string, returned $bit_string as " . substr($bit_string, 0, $num_bits));
 	return substr($bit_string, 0, $num_bits);
 }
 
@@ -106,10 +106,10 @@ function hc_CheckExpiration($a_stamp)
 	// gen hashes for $tempnow ... $tempnow - $tolerance
 	for($i = 0; $i < $hc_tolerance; $i++)
 	{
-//		DEBUG_OUT("checking $a_stamp versus " . hc_HashFunc(($tempnow - $i) . $ip . $hc_salt));
+		DEBUG_OUT("checking $a_stamp versus " . hc_HashFunc(($tempnow - $i) . $ip . $hc_salt));
 		if($a_stamp === hc_HashFunc(($tempnow - $i) . $ip . $hc_salt))
 		{
-//			DEBUG_OUT("stamp matched at T-Minus-" . $i);
+			DEBUG_OUT("stamp matched at T-Minus-" . $i);
 			$expired = false;
 			break;
 		}
@@ -126,11 +126,11 @@ function hc_CheckContract($stamp, $collision, $stamp_contract)
 
 	// get hash of $collision to compare to $stamp
 	$maybe_sum = hc_HashFunc($collision);
-//	DEBUG_OUT("checking contract of $stamp versus $maybe_sum for $stamp_contract bits");
+	DEBUG_OUT("checking contract of $stamp versus $maybe_sum for $stamp_contract bits");
 
 	$partone = hc_ExtractBits($stamp, $stamp_contract);
 	$parttwo = hc_ExtractBits($maybe_sum, $stamp_contract);
-//	DEBUG_OUT("checking $stamp_contract bits for $partone versus $parttwo");
+	DEBUG_OUT("checking $stamp_contract bits for $partone versus $parttwo");
 
 	return (strcmp($partone, $parttwo) == 0);
 }
@@ -153,8 +153,6 @@ function hc_CheckStamp()
 	$stamp = $_POST['hc_stamp'];
 	$client_con = $_POST['hc_contract'];
 	$collision = $_POST['hc_collision'];
-
-    return true;
 
 	DEBUG_OUT("got variables!");
 	DEBUG_OUT("stamp: $stamp");
@@ -182,6 +180,8 @@ function hc_CheckStamp()
 	if($validstamp) $validstamp = hc_CheckContract($stamp, $collision, $contract); // collision meets contract?
 	DEBUG_OUT("FINAL checked contract: $validstamp");
 
-	return $validstamp;
+    //return $validstamp;
+    DEBUG_OUT("returning $validstamp");
+    return true;
 }
 ?>
