@@ -165,5 +165,5 @@ function addLoadEventParm(func, parm)
 	}
 }
 
-addLoadEvent(hc_SetupTimeout);
+//addLoadEvent(hc_SetupTimeout);
 // addLoadEventParm(hc_SetupTimeout, parm);
