@@ -166,20 +166,45 @@ function hc_CheckStamp()
 
 	// optimized, fastest-test-first order
 
-	if($client_con != $hc_contract) $validstamp = false;                   // valid contract?
+    if($client_con != $hc_contract) {
+        $validstamp = false;                   // valid contract?
+        DEBUG_OUT("FAILED contract comparison: $client_con and $hc_contract : $validstamp");
+    }
 	DEBUG_OUT("contract comparison: $client_con and $hc_contract : $validstamp");
 
-	if($validstamp) if(strlen($stamp) != $hc_stampsize) $validstamp = false;       // valid stamp?
+    if($validstamp) if(strlen($stamp) != $hc_stampsize) {
+        $validstamp = false;       // valid stamp?
+        DEBUG_OUT("FAILED stamp size: " . strlen($stamp) . " and $hc_stampsize : $validstamp");
+    }
 	DEBUG_OUT("stamp size: " . strlen($stamp) . " and $hc_stampsize : $validstamp");
 
-	if($validstamp) if(strlen($collision) > $hc_maxcoll) $validstamp = false;    // valid collision?
+    if($validstamp) if(strlen($collision) > $hc_maxcoll) {
+        $validstamp = false;    // valid collision?
+        DEBUG_OUT("FAILED collision size " . strlen($collision) . " > $hc_maxcoll : $validstamp");
+    }
 	DEBUG_OUT("collision size " . strlen($collision) . " <= $hc_maxcoll : $validstamp");
 
 	if($validstamp) $validstamp = hc_CheckExpiration($stamp);           // stamp expired?
+    else {
+        if (hc_CheckExpiration($stamp)) {
+            DEBUG_OUT("theoretically, we would have passed expiration check");
+        }
+        else {
+            DEBUG_OUT("theoretically, we would have failed expiration check");
+        }
+    }
 	DEBUG_OUT("checked expiration: $validstamp");
 
 
 	if($validstamp) $validstamp = hc_CheckContract($stamp, $collision, $contract); // collision meets contract?
+    else {
+        if (hc_CheckContract($stamp, $collision, $contract)) {
+            DEBUG_OUT("theoretically, we would have passed contract check");
+        }
+        else {
+            DEBUG_OUT("theoretically, we would have failed contract check");
+        }
+    }
 	DEBUG_OUT("FINAL checked contract: $validstamp");
 
     return $validstamp;
